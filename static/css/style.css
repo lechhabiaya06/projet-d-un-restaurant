@@ -1,12 +1,107 @@
 body {
-    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('/static/images/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+section.container {
+    background: none;
+    padding: 40px;
+    color: #ffffff;
+}
+
+h1, h2, h3 {
+    font-family: Georgia, serif;
+}
+
+.navbar {
+    position: relative;
+    background-image: url('/static/images/logo.png');
+    background-size: cover;
+    background-position: center;
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+.navbar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 1;
+}
+
+.navbar .container {
+    position: relative;
+    z-index: 2;
 }
 
 .navbar-brand {
-    font-weight: bold;
+    color: #c9a227;
+    font-size: 1.5rem;
 }
 
-h1 {
+.nav-link {
+    color: #ffffff;
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #c9a227;
+}
+
+.hero {
+    position: relative;
+    background: none;
+    color: white;
+    text-align: center;
+    padding: 220px 20px;
+    min-height: 500px;
+}
+
+
+
+.hero h1,
+.hero p,
+.hero .btn-gold {
+    position: relative;
+    z-index: 2;
+}
+.hero h1 {
+    font-size: 3rem;
     margin-bottom: 20px;
-    color: #333;
+}
+
+.btn-gold {
+    background-color: #c9a227;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    transition: background-color 0.3s;
+}
+
+.btn-gold:hover {
+    background-color: #a9860f;
+}
+.menu-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    color: #ffffff;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.2);
 }

@@ -1,6 +1,51 @@
 {% extends "base.html" %}
 {% block title %}Accueil{% endblock %}
 {% block content %}
-<h1>Bienvenue dans notre restaurant</h1>
-<p>Découvrez notre menu et réservez votre table en ligne.</p>
+
+<div class="hero">
+    <h1 data-fr="Beaux moments, saveurs exquises" data-en="Beautiful moments, exquisite flavors" data-es="Bellos momentos, sabores exquisitos">Beaux moments, saveurs exquises</h1>
+    <p data-fr="Une expérience culinaire raffinée, entre tradition et modernité" data-en="A refined culinary experience, between tradition and modernity" data-es="Una experiencia culinaria refinada, entre tradición y modernidad">Une expérience culinaire raffinée, entre tradition et modernité</p>
+    <a href="/reservation" class="btn btn-gold" data-fr="Réserver une table" data-en="Book a table" data-es="Reservar una mesa">Réserver une table</a>
+</div>
+
+<section class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4">
+            <img src="{{ url_for('static', filename='images/sushi.png') }}" alt="Notre cuisine" class="img-fluid rounded">
+        </div>
+        <div class="col-md-6">
+            <h2 data-fr="Un voyage au cœur de l'Asie" data-en="A journey to the heart of Asia" data-es="Un viaje al corazón de Asia">Un voyage au cœur de l'Asie</h2>
+            <p data-fr="Nos chefs sélectionnent avec passion des ingrédients d'exception pour vous offrir des saveurs authentiques, entre tradition asiatique et cuisine contemporaine."
+               data-en="Our chefs passionately select exceptional ingredients to offer you authentic flavors, between Asian tradition and contemporary cuisine."
+               data-es="Nuestros chefs seleccionan con pasión ingredientes excepcionales para ofrecerle sabores auténticos, entre tradición asiática y cocina contemporánea.">
+                Nos chefs sélectionnent avec passion des ingrédients d'exception pour vous offrir des saveurs authentiques, entre tradition asiatique et cuisine contemporaine.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="text-center mb-4" data-fr="Notre carte" data-en="Our menu" data-es="Nuestra carta">Notre carte</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="menu-card p-4">
+                <h5 data-fr="Entrées" data-en="Starters" data-es="Entrantes">Entrées</h5>
+                <p data-fr="Un avant-goût raffiné" data-en="A refined preview" data-es="Un adelanto refinado">Un avant-goût raffiné</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="menu-card p-4">
+                <h5 data-fr="Plats" data-en="Main courses" data-es="Platos principales">Plats</h5>
+                <p data-fr="Nos spécialités signature" data-en="Our signature specialties" data-es="Nuestras especialidades">Nos spécialités signature</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="menu-card p-4">
+                <h5 data-fr="Boissons" data-en="Drinks" data-es="Bebidas">Boissons</h5>
+                <p data-fr="Jus frais et cocktails" data-en="Fresh juices and cocktails" data-es="Jugos frescos y cócteles">Jus frais et cocktails</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
