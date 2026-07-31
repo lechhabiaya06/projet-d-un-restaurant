@@ -19,8 +19,12 @@ def accueil():
 
 @app.route('/menu')
 def menu():
-    return render_template('menu.html')
-
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT * FROM plats")
+    plats = cursor.fetchall()
+    conn.close()
+    return render_template('menu.html', plats=plats)
 @app.route('/contact')
 def contact():
     return render_template('contact.html')

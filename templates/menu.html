@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Menu{% endblock %}
 {% block content %}
-<h1>Notre menu</h1>
-<p>La liste des plats s'affichera ici.</p>
+<div class="page-section">
+    <h1 class="section-title" data-fr="Notre menu" data-en="Our menu" data-es="Nuestra carta">Notre menu</h1>
+
+    <div class="cards-row">
+        {% for plat in plats %}
+        <div class="dish-card">
+            <div class="dish-image">
+                <img src="{{ url_for('static', filename='images/' + plat.image) }}" alt="{{ plat.nom }}">
+            </div>
+            <div class="dish-body">
+                <h5>{{ plat.nom }}</h5>
+                <p class="dish-desc">{{ plat.description }}</p>
+                <hr>
+                <div class="dish-price-row">
+                    <span data-fr="Prix" data-en="Price" data-es="Precio">Prix</span>
+                    <span class="dish-price">{{ "%.2f"|format(plat.prix) }} Dhs</span>
+                </div>
+              <button class="btn-add-cart"
+        data-id="{{ plat.id }}"
+        data-nom="{{ plat.nom }}"
+        data-prix="{{ plat.prix }}"
+        data-fr="+ Ajouter au panier" data-en="+ Add to cart" data-es="+ Añadir al carrito">+ Ajouter au panier</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

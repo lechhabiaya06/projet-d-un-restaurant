@@ -3,61 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}bewok{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container d-flex justify-content-between align-items-center">
-        <a class="navbar-brand d-flex align-items-center" href="/">
-    <img src="{{ url_for('static', filename='images/sushi.png') }}" alt="Logo" height="40" class="me-2">
-    <span data-fr="Bewok" data-en="Bewok" data-es="Bewok">bewok</span>
-<div class="navbar-nav d-flex flex-row">
-    <a class="nav-link me-3" href="/" data-fr="Accueil" data-en="Home" data-es="Inicio">Accueil</a>
-    <a class="nav-link me-3" href="/menu" data-fr="Menu" data-en="Menu" data-es="Menú">Menu</a>
-    <a class="nav-link me-3" href="/reservation" data-fr="Réservation" data-en="Reservation" data-es="Reserva">Réservation</a>
-    <a class="nav-link me-3" href="/contact" data-fr="Contact" data-en="Contact" data-es="Contacto">Contact</a>
-    <button id="lang" class="btn btn-sm btn-outline-light">FR</button>
+    <div class="bg-slideshow">
+    <div class="bg-slide bg-slide1"></div>
+    <div class="bg-slide bg-slide2"></div>
 </div>
+  <nav class="navbar">
+    <div class="nav-container">
+       <a class="brand" href="/">
+    <img src="{{ url_for('static', filename='images/sushi.png') }}" alt="Bewok" height="45">
+</a>
+        <div class="nav-links">
+            <a href="/" data-fr="Accueil" data-en="Home" data-es="Inicio">Accueil</a>
+            <a href="/menu" data-fr="Menu" data-en="Menu" data-es="Menú">Menu</a>
+            <a href="/reservation" data-fr="Réservation" data-en="Reservation" data-es="Reserva">Réservation</a>
+            <a href="/contact" data-fr="Contact" data-en="Contact" data-es="Contacto">Contact</a>
+            <button id="lang" class="btn-lang">FR</button>
+            <div class="cart-wrapper">
+    <button id="cart-toggle" class="cart-btn">🛒 <span id="cart-count">0</span></button>
+    <div id="cart-dropdown" class="cart-dropdown">
+        <div id="cart-items"><p>Votre panier est vide.</p></div>
+        <div id="cart-total"></div>
+        <button id="btn-commander" class="btn-gold" data-fr="Valider la commande" data-en="Confirm order" data-es="Confirmar pedido">Valider la commande</button>
+    </div>
+</div>
+        </div>
     </div>
 </nav>
 
     <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
-    <footer class="bg-dark text-white mt-5 py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <h5 style="color: #c9a227;" data-fr="Mon Restaurant" data-en="My Restaurant" data-es="Mi Restaurante">bewok</h5>
-                <p data-fr="Une expérience culinaire raffinée, entre tradition et modernité."
-                   data-en="A refined culinary experience, between tradition and modernity."
-                   data-es="Una experiencia culinaria refinada, entre tradición y modernidad.">
-                   Une expérience culinaire raffinée, entre tradition et modernité.
-                </p>
+   <footer class="site-footer">
+    <div class="footer-inner">
+        <h2 class="footer-brand">BEWOK</h2>
+        <p class="footer-tagline" data-fr="Fast, Fresh & Fun" data-en="Fast, Fresh & Fun" data-es="Fast, Fresh & Fun">Fast, Fresh & Fun</p>
+
+        <div class="footer-columns">
+            <div class="footer-col">
+    <h5 data-fr="Nous contacter" data-en="Contact us" data-es="Contáctenos">Nous contacter</h5>
+    <p>📍 Casablanca, Maroc<br>
+    📞 +212 6 00 00 00 00<br>
+    ✉️ contact@bewok.ma</p>
+</div>
+            <div class="footer-col">
+                <h5 data-fr="Nous suivre" data-en="Follow us" data-es="Síguenos">Nous suivre</h5>
+                <div class="footer-socials">
+                    <a href="#" class="social-circle">IG</a>
+                    <a href="#" class="social-circle">FB</a>
+                </div>
             </div>
-            <div class="col-md-4 mb-3">
-               <h5 style="color: #c9a227;" data-fr="Bewok" data-en="Bewok" data-es="Bewok">Adresse</h5>
-                <p data-fr="Casablanca, Maroc<br>+212 6 00 00 00 00<br>contact@monrestaurant.ma"
-                   data-en="Casablanca, Morocco<br>+212 6 00 00 00 00<br>contact@monrestaurant.ma"
-                   data-es="Casablanca, Marruecos<br>+212 6 00 00 00 00<br>contact@monrestaurant.ma">
-                   Casablanca, Maroc<br>+212 6 00 00 00 00<br>contact@monrestaurant.ma
-                </p>
+            <div class="footer-col">
+                <h5 data-fr="Villes" data-en="Cities" data-es="Ciudades">Villes</h5>
+                <p>Casablanca</p>
             </div>
-            <div class="col-md-4 mb-3">
-                <h5 style="color: #c9a227;" data-fr="Horaires" data-en="Opening Hours" data-es="Horario">Horaires</h5>
-                <p data-fr="Lundi - Dimanche<br>12h00 - 23h00"
-                   data-en="Monday - Sunday<br>12:00 PM - 11:00 PM"
-                   data-es="Lunes - Domingo<br>12:00 - 23:00">
-                   Lundi - Dimanche<br>12h00 - 23h00
-                </p>
-            </div>
+            <div class="footer-col">
+    <h5 data-fr="Horaires" data-en="Opening Hours" data-es="Horario">Horaires</h5>
+    <p data-fr="🕒 Lundi - Dimanche<br>12h00 - 23h00" data-en="🕒 Monday - Sunday<br>12:00 PM - 11:00 PM" data-es="🕒 Lunes - Domingo<br>12:00 - 23:00">🕒 Lundi - Dimanche<br>12h00 - 23h00</p>
+</div>
         </div>
-        <hr style="border-color: #555;">
-        <p class="text-center mb-0" data-fr="© 2026 Bewok. Tous droits réservés." data-en="© 2026 Bewok. All rights reserved." data-es="© 2026 Bewok. Todos los derechos reservados.">© 2026 Bewok. Tous droits réservés.</p>
+
+        <hr class="footer-line">
+        <p class="footer-copy" data-fr="© 2026 Bewok. Tous droits réservés." data-en="© 2026 Bewok. All rights reserved." data-es="© 2026 Bewok. Todos los derechos reservados.">© 2026 Bewok. Tous droits réservés.</p>
     </div>
 </footer>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
