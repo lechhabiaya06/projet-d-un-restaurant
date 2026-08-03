@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,request
 import pymysql
 import config
 
@@ -33,5 +33,37 @@ def contact():
 def reservation():
     return render_template('reservation.html')
 
+
+@app.route('/commander', methods=['POST'])
+def commander():
+    ids_plats = request.form.getlist('plat_id')
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    total = 0
+    infos_plats = []
+    for plat_id in ids_plats:
+        cursor.execute("SELECT * FROM plats WHERE id = %s", (plat_id,))
+        plat = cursor.fetchone()
+        infos_plats.append(plat)
+        total = total + float(plat['prix'])
+
+    cursor.execute(
+        "INSERT INTO commandes (date, statut, total) VALUES (NOW(), 'en attente', %s)",
+        (total,)
+    )
+    commande_id = cursor.lastrowid
+
+    for plat in infos_plats:
+        cursor.execute(
+            "INSERT INTO lignes_commande (commande_id, plat_id, quantite, prix_unitaire) VALUES (%s, %s, %s, %s)",
+            (commande_id, plat['id'], 1, plat['prix'])
+        )
+
+    conn.commit()
+    conn.close()
+
+    return f"Commande n°{commande_id} enregistrée avec succès ! Total : {total} Dhs"
 if __name__ == '__main__':
     app.run(debug=True)

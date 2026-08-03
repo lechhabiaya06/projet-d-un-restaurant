@@ -57,16 +57,27 @@ cartToggle.addEventListener('click', function() {
 });
 
 // Valider la commande (pour l'instant, simulation simple)
+// Valider la commande -> envoie au serveur Flask
 const btnCommander = document.getElementById('btn-commander');
 btnCommander.addEventListener('click', function() {
     if (panier.length === 0) {
         alert('Votre panier est vide.');
         return;
     }
-    alert('Commande validée ! Merci pour votre confiance.');
-    panier = [];
-    afficherPanier();
-    cartDropdown.classList.remove('open');
-});
 
+    const formulaire = document.createElement('form');
+    formulaire.method = 'POST';
+    formulaire.action = '/commander';
+
+    for (let i = 0; i < panier.length; i++) {
+        const champ = document.createElement('input');
+        champ.type = 'hidden';
+        champ.name = 'plat_id';
+        champ.value = panier[i].id;
+        formulaire.appendChild(champ);
+    }
+
+    document.body.appendChild(formulaire);
+    formulaire.submit();
+});
 afficherPanier();
