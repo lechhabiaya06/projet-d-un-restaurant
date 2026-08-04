@@ -1,6 +1,49 @@
 {% extends "base.html" %}
 {% block title %}Contact{% endblock %}
 {% block content %}
-<h1>Contactez-nous</h1>
-<p>Formulaire de contact à venir.</p>
+<div class="page-section">
+    <div class="contact-layout">
+        <div class="contact-infos">
+            <p class="contact-kicker" data-fr="Restons en contact" data-en="Keep close" data-es="Mantengámonos en contacto">Restons en contact</p>
+            <h1 data-fr="Contactez-nous" data-en="Get in touch" data-es="Contáctenos">Contactez-nous</h1>
+            <p data-fr="Une question, une suggestion ? Notre équipe vous répond rapidement."
+               data-en="A question, a suggestion? Our team replies quickly."
+               data-es="¿Una pregunta, una sugerencia? Nuestro equipo le responde rápidamente.">
+               Une question, une suggestion ? Notre équipe vous répond rapidement.
+            </p>
+
+            <div class="contact-info-item">
+                <span class="contact-icon-small">📍</span>
+                <div><p>Casablanca, Maroc</p></div>
+            </div>
+            <div class="contact-info-item">
+                <span class="contact-icon-small">📞</span>
+                <div><p>+212 661 393 478</p></div>
+            </div>
+            <div class="contact-info-item">
+                <span class="contact-icon-small">✉️</span>
+                <div><p>contact@bewok.ma</p></div>
+            </div>
+        </div>
+
+        <form method="POST" action="/contact" class="contact-form-dark">
+            <p class="form-kicker" data-fr="Vos coordonnées" data-en="Your details" data-es="Sus datos">Vos coordonnées</p>
+
+            <label for="nom" data-fr="Nom" data-en="Name" data-es="Nombre">Nom</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="email" data-fr="Email" data-en="Email" data-es="Correo electrónico">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message" data-fr="Message" data-en="Message" data-es="Mensaje">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit" class="btn-gold" data-fr="Envoyer" data-en="Send" data-es="Enviar">Envoyer</button>
+        </form>
+    </div>
+
+    {% if message_confirmation %}
+    <p class="reservation-message">{{ message_confirmation }}</p>
+    {% endif %}
+</div>
 {% endblock %}

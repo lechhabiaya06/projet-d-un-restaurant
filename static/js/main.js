@@ -29,11 +29,26 @@ function afficherPanier() {
     for (let i = 0; i < panier.length; i++) {
         const plat = panier[i];
         total = total + plat.prix;
-        zone.innerHTML += '<div class="cart-row"><span>' + plat.nom + '</span><span>' + plat.prix.toFixed(2) + ' Dhs</span></div>';
+
+        const ligne = document.createElement('div');
+        ligne.className = 'cart-row';
+        ligne.innerHTML =
+            '<span>' + plat.nom + '</span>' +
+            '<span>' + plat.prix.toFixed(2) + ' Dhs</span>' +
+            '<button class="btn-remove" data-index="' + i + '">✕</button>';
+        zone.appendChild(ligne);
     }
 
     totalZone.textContent = 'Total : ' + total.toFixed(2) + ' Dhs';
     document.getElementById('cart-count').textContent = panier.length;
+
+    document.querySelectorAll('.btn-remove').forEach(function(bouton) {
+        bouton.addEventListener('click', function() {
+            const index = parseInt(bouton.getAttribute('data-index'));
+            panier.splice(index, 1);
+            afficherPanier();
+        });
+    });
 }
 
 document.querySelectorAll('.btn-add-cart').forEach(function(bouton) {
@@ -47,7 +62,6 @@ document.querySelectorAll('.btn-add-cart').forEach(function(bouton) {
         afficherPanier();
     });
 });
-
 // Ouvrir/fermer la carte panier
 const cartToggle = document.getElementById('cart-toggle');
 const cartDropdown = document.getElementById('cart-dropdown');
@@ -56,7 +70,6 @@ cartToggle.addEventListener('click', function() {
     cartDropdown.classList.toggle('open');
 });
 
-// Valider la commande (pour l'instant, simulation simple)
 // Valider la commande -> envoie au serveur Flask
 const btnCommander = document.getElementById('btn-commander');
 btnCommander.addEventListener('click', function() {
@@ -80,4 +93,5 @@ btnCommander.addEventListener('click', function() {
     document.body.appendChild(formulaire);
     formulaire.submit();
 });
+
 afficherPanier();

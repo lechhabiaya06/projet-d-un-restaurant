@@ -25,13 +25,57 @@ def menu():
     plats = cursor.fetchall()
     conn.close()
     return render_template('menu.html', plats=plats)
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
 
-@app.route('/reservation')
+
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    message_confirmation = None
+    if request.method == 'POST':
+        nom = request.form['nom']
+        email = request.form['email']
+        message = request.form['message']
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO messages (nom, email, message) VALUES (%s, %s, %s)",
+            (nom, email, message)
+        )
+        conn.commit()
+        conn.close()
+
+        message_confirmation = "Votre message a bien été envoyé. Nous vous répondrons rapidement !"
+
+    return render_template('contact.html', message_confirmation=message_confirmation)
+
+
+
+
+
+
+@app.route('/reservation', methods=['GET', 'POST'])
 def reservation():
-    return render_template('reservation.html')
+    message = None
+    if request.method == 'POST':
+        nom = request.form['nom']
+        telephone = request.form['telephone']
+        date = request.form['date']
+        heure = request.form['heure']
+        nb_personnes = request.form['nb_personnes']
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO reservations (nom, telephone, date, heure, nb_personnes) VALUES (%s, %s, %s, %s, %s)",
+            (nom, telephone, date, heure, nb_personnes)
+        )
+        conn.commit()
+        conn.close()
+
+        message = "Votre réservation a bien été enregistrée. Nous vous contacterons pour la confirmer !"
+
+    return render_template('reservation.html', message=message)
 
 
 @app.route('/commander', methods=['POST'])

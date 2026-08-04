@@ -1,6 +1,30 @@
 {% extends "base.html" %}
 {% block title %}Réservation{% endblock %}
 {% block content %}
-<h1>Réserver une table</h1>
-<p>Formulaire de réservation à venir.</p>
+<div class="page-section">
+    <h1 class="section-title" data-fr="Réserver une table" data-en="Book a table" data-es="Reservar una mesa">Réserver une table</h1>
+
+    <form method="POST" action="/reservation" class="reservation-form">
+        <label for="nom" data-fr="Nom complet" data-en="Full name" data-es="Nombre completo">Nom complet</label>
+        <input type="text" id="nom" name="nom" required>
+
+        <label for="telephone" data-fr="Téléphone" data-en="Phone" data-es="Teléfono">Téléphone</label>
+        <input type="tel" id="telephone" name="telephone" required>
+
+        <label for="date" data-fr="Date" data-en="Date" data-es="Fecha">Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="heure" data-fr="Heure" data-en="Time" data-es="Hora">Heure</label>
+        <input type="time" id="heure" name="heure" required>
+
+        <label for="nb_personnes" data-fr="Nombre de personnes" data-en="Number of people" data-es="Número de personas">Nombre de personnes</label>
+        <input type="number" id="nb_personnes" name="nb_personnes" min="1" max="4" required>
+
+        <button type="submit" class="btn-gold" data-fr="Confirmer la réservation" data-en="Confirm reservation" data-es="Confirmar reserva">Confirmer la réservation</button>
+    </form>
+
+    {% if message %}
+    <p class="reservation-message">{{ message }}</p>
+    {% endif %}
+</div>
 {% endblock %}
