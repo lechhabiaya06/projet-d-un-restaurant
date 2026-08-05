@@ -1,8 +1,9 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template, request, redirect, url_for, session
 import pymysql
 import config
 
 app = Flask(__name__)
+app.secret_key = 'bewok_cle_secrete_2026'
 
 def get_db_connection():
     connection = pymysql.connect(
@@ -27,7 +28,6 @@ def menu():
     return render_template('menu.html', plats=plats)
 
 
-
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     message_confirmation = None
@@ -48,10 +48,6 @@ def contact():
         message_confirmation = "Votre message a bien été envoyé. Nous vous répondrons rapidement !"
 
     return render_template('contact.html', message_confirmation=message_confirmation)
-
-
-
-
 
 
 @app.route('/reservation', methods=['GET', 'POST'])
@@ -109,5 +105,44 @@ def commander():
     conn.close()
 
     return f"Commande n°{commande_id} enregistrée avec succès ! Total : {total} Dhs"
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    erreur = None
+    if request.method == 'POST':
+        email = request.form['email']
+        mot_de_passe = request.form['mot_de_passe']
+
+        conn = get_db_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute("SELECT * FROM utilisateurs WHERE email = %s", (email,))
+        utilisateur = cursor.fetchone()
+        conn.close()
+
+        if utilisateur and utilisateur['mot_de_passe'] == mot_de_passe and utilisateur['role'] == 'admin':
+            session['admin_connecte'] = True
+            session['admin_nom'] = utilisateur['nom']
+            return redirect(url_for('dashboard'))
+        else:
+            erreur = "Email ou mot de passe incorrect."
+
+    return render_template('login.html', erreur=erreur)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('admin_connecte', None)
+    session.pop('admin_nom', None)
+    return redirect(url_for('login'))
+
+
+@app.route('/dashboard')
+def dashboard():
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+    return f"Bienvenue {session.get('admin_nom')} ! (Tableau de bord à construire ensuite)"
+
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Connexion{% endblock %}
 {% block content %}
-<h1>Connexion</h1>
-<p>Formulaire de connexion à venir.</p>
+<div class="page-section">
+    <div class="contact-form-dark" style="max-width: 400px; margin: 0 auto; color: #333;">
+        <h1 class="section-title" style="color: #ffffff;">Connexion Admin</h1>
+
+        <form method="POST" action="/login" class="reservation-form" style="background: none; box-shadow: none; padding: 0;">
+            <label for="email" style="color: #ffffff;">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="mot_de_passe" style="color: #ffffff;">Mot de passe</label>
+            <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+
+            <button type="submit" class="btn-gold" style="margin-top: 15px;">Se connecter</button>
+        </form>
+
+        {% if erreur %}
+        <p class="reservation-message" style="color: #ff6b6b;">{{ erreur }}</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

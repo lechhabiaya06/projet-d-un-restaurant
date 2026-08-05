@@ -3,25 +3,52 @@
 {% block content %}
 <div class="page-section">
     <h1 class="section-title" data-fr="Réserver une table" data-en="Book a table" data-es="Reservar una mesa">Réserver une table</h1>
+    <div class="title-divider"><span></span></div>
+    <p class="reservation-subtitle" data-fr="Réservez votre table en quelques secondes. Notre équipe confirmera votre réservation rapidement."
+       data-en="Book your table in seconds. Our team will confirm your reservation quickly."
+       data-es="Reserve su mesa en segundos. Nuestro equipo confirmará su reserva rápidamente.">
+       Réservez votre table en quelques secondes. Notre équipe confirmera votre réservation rapidement.
+    </p>
 
-    <form method="POST" action="/reservation" class="reservation-form">
-        <label for="nom" data-fr="Nom complet" data-en="Full name" data-es="Nombre completo">Nom complet</label>
-        <input type="text" id="nom" name="nom" required>
+    <div class="reservation-box">
+        <form method="POST" action="/reservation" class="reservation-grid">
+            <div class="field-group">
+                <label data-fr="Nom complet" data-en="Full name" data-es="Nombre completo">Nom complet</label>
+                <input type="text" name="nom" placeholder="Votre nom" required>
+            </div>
+            <div class="field-group">
+                <label data-fr="Téléphone" data-en="Phone" data-es="Teléfono">Téléphone</label>
+                <input type="tel" name="telephone" placeholder="Votre téléphone" required>
+            </div>
+            <div class="field-group">
+                <label data-fr="Date" data-en="Date" data-es="Fecha">Date</label>
+                <input type="date" name="date" required>
+            </div>
+            <div class="field-group">
+                <label data-fr="Heure" data-en="Time" data-es="Hora">Heure</label>
+                <input type="time" name="heure" required>
+            </div>
+            <div class="field-group">
+                <label data-fr="Nombre de personnes" data-en="Number of people" data-es="Número de personas">Nombre de personnes</label>
+                <input type="number" name="nb_personnes" min="1" max="20" placeholder="Ex : 2 personnes" required>
+            </div>
+            <div class="field-group field-submit">
+                <button type="submit" class="btn-gold" data-fr="Confirmer la réservation" data-en="Confirm reservation" data-es="Confirmar reserva">Confirmer la réservation</button>
+            </div>
+        </form>
 
-        <label for="telephone" data-fr="Téléphone" data-en="Phone" data-es="Teléfono">Téléphone</label>
-        <input type="tel" id="telephone" name="telephone" required>
-
-        <label for="date" data-fr="Date" data-en="Date" data-es="Fecha">Date</label>
-        <input type="date" id="date" name="date" required>
-
-        <label for="heure" data-fr="Heure" data-en="Time" data-es="Hora">Heure</label>
-        <input type="time" id="heure" name="heure" required>
-
-        <label for="nb_personnes" data-fr="Nombre de personnes" data-en="Number of people" data-es="Número de personas">Nombre de personnes</label>
-        <input type="number" id="nb_personnes" name="nb_personnes" min="1" max="4" required>
-
-        <button type="submit" class="btn-gold" data-fr="Confirmer la réservation" data-en="Confirm reservation" data-es="Confirmar reserva">Confirmer la réservation</button>
-    </form>
+        <div class="reservation-infos">
+            <div class="res-info-item">
+                <div><h6 data-fr="Adresse" data-en="Address" data-es="Dirección">Adresse</h6><p>Casablanca, Maroc</p></div>
+            </div>
+            <div class="res-info-item">
+                <div><h6 data-fr="Téléphone" data-en="Phone" data-es="Teléfono">Téléphone</h6><p>+212 661 393 478</p></div>
+            </div>
+            <div class="res-info-item">
+                <div><h6 data-fr="Horaires" data-en="Opening Hours" data-es="Horario">Horaires</h6><p data-fr="Lun - Dim : 11h00 - 23h00" data-en="Mon - Sun: 11:00 AM - 11:00 PM" data-es="Lun - Dom: 11:00 - 23:00">Lun - Dim : 11h00 - 23h00</p></div>
+            </div>
+        </div>
+    </div>
 
     {% if message %}
     <p class="reservation-message">{{ message }}</p>
