@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Gestion des réservations{% endblock %}
+{% block content %}
+<div class="page-section">
+    <h1 class="section-title">Gestion des réservations</h1>
+    <p style="text-align:center;"><a href="/dashboard" style="color:#c9a227;">← Retour au tableau de bord</a></p>
+
+    <div class="dashboard-table-block" style="max-width: 800px; margin: 0 auto;">
+        <table class="admin-table">
+            <tr><th>Nom</th><th>Téléphone</th><th>Date</th><th>Heure</th><th>Personnes</th><th>Actions</th></tr>
+            {% for r in reservations %}
+            <tr>
+                <td>{{ r.nom }}</td>
+                <td>{{ r.telephone }}</td>
+                <td>{{ r.date }}</td>
+                <td>{{ r.heure }}</td>
+                <td>{{ r.nb_personnes }}</td>
+                <td>
+                    <a href="/admin/reservations/annuler/{{ r.id }}" onclick="return confirm('Annuler cette réservation ?')">Annuler</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

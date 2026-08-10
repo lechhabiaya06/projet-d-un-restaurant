@@ -344,7 +344,32 @@ def admin_commandes_statut(id):
     conn.close()
 
     return redirect(url_for('admin_commandes'))
+@app.route('/admin/reservations')
+def admin_reservations():
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
 
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT * FROM reservations ORDER BY id DESC")
+    reservations = cursor.fetchall()
+    conn.close()
+
+    return render_template('admin_reservations.html', reservations=reservations)
+
+
+@app.route('/admin/reservations/annuler/<int:id>')
+def admin_reservations_annuler(id):
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM reservations WHERE id = %s", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin_reservations'))
 
 if __name__ == '__main__':
     app.run(debug=True)
