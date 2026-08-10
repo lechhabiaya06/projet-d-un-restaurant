@@ -136,12 +136,214 @@ def logout():
     session.pop('admin_nom', None)
     return redirect(url_for('login'))
 
-
 @app.route('/dashboard')
 def dashboard():
     if not session.get('admin_connecte'):
         return redirect(url_for('login'))
-    return f"Bienvenue {session.get('admin_nom')} ! (Tableau de bord à construire ensuite)"
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    cursor.execute("SELECT COUNT(*) AS total FROM plats")
+    nb_plats = cursor.fetchone()['total']
+
+    cursor.execute("SELECT COUNT(*) AS total FROM commandes")
+    nb_commandes = cursor.fetchone()['total']
+
+    cursor.execute("SELECT COUNT(*) AS total FROM reservations")
+    nb_reservations = cursor.fetchone()['total']
+
+    cursor.execute("SELECT * FROM commandes ORDER BY id DESC LIMIT 5")
+    dernieres_commandes = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM reservations ORDER BY id DESC LIMIT 5")
+    dernieres_reservations = cursor.fetchall()
+
+    conn.close()
+
+    return render_template('dashboard.html',
+        nb_plats=nb_plats,
+        nb_commandes=nb_commandes,
+        nb_reservations=nb_reservations,
+        dernieres_commandes=dernieres_commandes,
+        dernieres_reservations=dernieres_reservations
+    )
+
+@app.route('/admin/plats')
+def admin_plats():
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT plats.*, categories.nom AS categorie_nom FROM plats JOIN categories ON plats.categorie_id = categories.id")
+    plats = cursor.fetchall()
+    conn.close()
+
+    return render_template('admin_plats.html', plats=plats)
+@app.route('/admin/plats/ajouter', methods=['GET', 'POST'])
+def admin_plats_ajouter():
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT * FROM categories")
+    categories = cursor.fetchall()
+
+    if request.method == 'POST':
+        nom = request.form['nom']
+        description = request.form['description']
+        prix = request.form['prix']
+        image = request.form['image']
+        categorie_id = request.form['categorie_id']
+
+        cursor.execute(
+            "INSERT INTO plats (nom, description, prix, image, categorie_id) VALUES (%s, %s, %s, %s, %s)",
+            (nom, description, prix, image, categorie_id)
+        )
+        conn.commit()
+        conn.close()
+        return redirect(url_for('admin_plats'))
+
+    conn.close()
+    return render_template('admin_plat_form.html', categories=categories, plat=None)
+@app.route('/admin/plats/modifier/<int:id>', methods=['GET', 'POST'])
+def admin_plats_modifier(id):
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT * FROM categories")
+    categories = cursor.fetchall()
+
+    if request.method == 'POST':
+        nom = request.form['nom']
+        description = request.form['description']
+        prix = request.form['prix']
+        image = request.form['image']
+        categorie_id = request.form['categorie_id']
+
+        cursor.execute(
+            "UPDATE plats SET nom=%s, description=%s, prix=%s, image=%s, categorie_id=%s WHERE id=%s",
+            (nom, description, prix, image, categorie_id, id)
+        )
+        conn.commit()
+        conn.close()
+        return redirect(url_for('admin_plats'))
+
+    cursor.execute("SELECT * FROM plats WHERE id = %s", (id,))
+    plat = cursor.fetchone()
+    conn.close()
+
+    return render_template('admin_plat_form.html', categories=categories, plat=plat)
+@app.route('/admin/plats/supprimer/<int:id>')
+def admin_plats_supprimer(id):
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM plats WHERE id = %s", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin_plats'))
+
+
+@app.route('/admin/categories/ajouter', methods=['GET', 'POST'])
+def admin_categories_ajouter():
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        nom = request.form['nom']
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO categories (nom) VALUES (%s)", (nom,))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('admin_categories'))
+
+    return render_template('admin_categorie_form.html', categorie=None)
+@app.route('/admin/categories')
+def admin_categories():
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT * FROM categories")
+    categories = cursor.fetchall()
+    conn.close()
+
+    return render_template('admin_categories.html', categories=categories)
+
+
+@app.route('/admin/categories/modifier/<int:id>', methods=['GET', 'POST'])
+def admin_categories_modifier(id):
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    if request.method == 'POST':
+        nom = request.form['nom']
+        cursor.execute("UPDATE categories SET nom=%s WHERE id=%s", (nom, id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('admin_categories'))
+
+    cursor.execute("SELECT * FROM categories WHERE id = %s", (id,))
+    categorie = cursor.fetchone()
+    conn.close()
+
+    return render_template('admin_categorie_form.html', categorie=categorie)
+
+
+@app.route('/admin/categories/supprimer/<int:id>')
+def admin_categories_supprimer(id):
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM categories WHERE id = %s", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin_categories'))
+
+@app.route('/admin/commandes')
+def admin_commandes():
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute("SELECT * FROM commandes ORDER BY id DESC")
+    commandes = cursor.fetchall()
+    conn.close()
+
+    return render_template('admin_commandes.html', commandes=commandes)
+
+
+@app.route('/admin/commandes/statut/<int:id>', methods=['POST'])
+def admin_commandes_statut(id):
+    if not session.get('admin_connecte'):
+        return redirect(url_for('login'))
+
+    nouveau_statut = request.form['statut']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE commandes SET statut=%s WHERE id=%s", (nouveau_statut, id))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin_commandes'))
 
 
 if __name__ == '__main__':

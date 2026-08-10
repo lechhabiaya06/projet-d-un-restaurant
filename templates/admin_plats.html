@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Gestion des plats{% endblock %}
+{% block content %}
+<div class="page-section">
+    <h1 class="section-title">Gestion des plats</h1>
+    <p style="text-align:center;"><a href="/dashboard" style="color:#c9a227;">← Retour au tableau de bord</a></p>
+
+    <div class="dashboard-table-block" style="max-width: 900px; margin: 0 auto;">
+        <a href="/admin/plats/ajouter" class="btn-gold" style="display:inline-block; margin-bottom:15px;">+ Ajouter un plat</a>
+        <table class="admin-table">
+            <tr><th>Nom</th><th>Catégorie</th><th>Prix</th><th>Actions</th></tr>
+            {% for plat in plats %}
+            <tr>
+                <td>{{ plat.nom }}</td>
+                <td>{{ plat.categorie_nom }}</td>
+                <td>{{ plat.prix }} Dhs</td>
+                <td>
+                    <a href="/admin/plats/modifier/{{ plat.id }}">Modifier</a> |
+                    <a href="/admin/plats/supprimer/{{ plat.id }}" onclick="return confirm('Supprimer ce plat ?')">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Gestion des catégories{% endblock %}
+{% block content %}
+<div class="page-section">
+    <h1 class="section-title">Gestion des catégories</h1>
+    <p style="text-align:center;"><a href="/dashboard" style="color:#c9a227;">← Retour au tableau de bord</a></p>
+
+    <div class="dashboard-table-block" style="max-width: 600px; margin: 0 auto;">
+        <a href="/admin/categories/ajouter" class="btn-gold" style="display:inline-block; margin-bottom:15px;">+ Ajouter une catégorie</a>
+        <table class="admin-table">
+            <tr><th>Nom</th><th>Actions</th></tr>
+            {% for cat in categories %}
+            <tr>
+                <td>{{ cat.nom }}</td>
+                <td>
+                    <a href="/admin/categories/modifier/{{ cat.id }}">Modifier</a> |
+                    <a href="/admin/categories/supprimer/{{ cat.id }}" onclick="return confirm('Supprimer cette catégorie ?')">Supprimer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

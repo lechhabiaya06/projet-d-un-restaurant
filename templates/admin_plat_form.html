@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Ajouter un plat{% endblock %}
+{% block content %}
+<div class="page-section">
+    <h1 class="section-title">{% if plat %}Modifier{% else %}Ajouter{% endif %} un plat</h1>
+
+    <div class="dashboard-table-block" style="max-width: 500px; margin: 0 auto;">
+        <form method="POST" class="reservation-form" style="background:none; box-shadow:none; padding:0; color:#333;">
+            <label>Nom du plat</label>
+            <input type="text" name="nom" value="{{ plat.nom if plat else '' }}" required>
+
+            <label>Description</label>
+            <textarea name="description" rows="3">{{ plat.description if plat else '' }}</textarea>
+
+            <label>Prix (Dhs)</label>
+            <input type="number" step="0.01" name="prix" value="{{ plat.prix if plat else '' }}" required>
+
+            <label>Nom du fichier image (ex: gyoza.jpg)</label>
+            <input type="text" name="image" value="{{ plat.image if plat else '' }}" required>
+
+            <label>Catégorie</label>
+            <select name="categorie_id" required>
+                {% for cat in categories %}
+                <option value="{{ cat.id }}" {% if plat and plat.categorie_id == cat.id %}selected{% endif %}>{{ cat.nom }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn-gold" style="margin-top:15px;">Enregistrer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

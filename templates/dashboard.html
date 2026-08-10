@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Tableau de bord{% endblock %}
+{% block content %}
+<div class="page-section">
+    <h1 class="section-title">Tableau de bord</h1>
+    <p style="text-align:center; color:#fff;">Bienvenue, {{ session.admin_nom }} — <a href="/logout" style="color:#c9a227;">Déconnexion</a></p>
+<div class="admin-nav">
+    <a href="/admin/plats" class="btn-gold">Gérer les plats</a>
+    <a href="/admin/categories" class="btn-gold">Gérer les catégories</a>
+     <a href="/admin/commandes" class="btn-gold">Gérer les commandes</a>
+</div>
+    <div class="stats-row">
+        <div class="stat-card">
+            <p class="stat-number">{{ nb_plats }}</p>
+            <p class="stat-label">Plats</p>
+        </div>
+        <a href="/admin/plats" class="stat-card" style="text-decoration:none;">
+    <p class="stat-number">{{ nb_plats }}</p>
+    <p class="stat-label">Plats</p>
+</a>
+        <div class="stat-card">
+            <p class="stat-number">{{ nb_reservations }}</p>
+            <p class="stat-label">Réservations</p>
+        </div>
+    </div>
+
+    <div class="dashboard-tables">
+        <div class="dashboard-table-block">
+            <h3>Dernières commandes</h3>
+            <table class="admin-table">
+                <tr><th>N°</th><th>Date</th><th>Statut</th><th>Total</th></tr>
+                {% for c in dernieres_commandes %}
+                <tr>
+                    <td>{{ c.id }}</td>
+                    <td>{{ c.date }}</td>
+                    <td>{{ c.statut }}</td>
+                    <td>{{ c.total }} Dhs</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="dashboard-table-block">
+            <h3>Dernières réservations</h3>
+            <table class="admin-table">
+                <tr><th>Nom</th><th>Date</th><th>Heure</th><th>Personnes</th></tr>
+                {% for r in dernieres_reservations %}
+                <tr>
+                    <td>{{ r.nom }}</td>
+                    <td>{{ r.date }}</td>
+                    <td>{{ r.heure }}</td>
+                    <td>{{ r.nb_personnes }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

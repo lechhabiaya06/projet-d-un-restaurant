@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Catégorie{% endblock %}
+{% block content %}
+<div class="page-section">
+    <h1 class="section-title">Ajouter une catégorie</h1>
+
+    <div class="dashboard-table-block" style="max-width: 400px; margin: 0 auto;">
+        <form method="POST" class="reservation-form" style="background:none; box-shadow:none; padding:0; color:#333;">
+            <label>Nom de la catégorie</label>
+            <input type="text" name="nom" required>
+
+            <button type="submit" class="btn-gold" style="margin-top:15px;">Enregistrer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
