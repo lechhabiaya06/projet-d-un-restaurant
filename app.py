@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
 import config
 
@@ -120,7 +121,7 @@ def login():
         utilisateur = cursor.fetchone()
         conn.close()
 
-        if utilisateur and utilisateur['mot_de_passe'] == mot_de_passe and utilisateur['role'] == 'admin':
+        if utilisateur and check_password_hash(utilisateur['mot_de_passe'], mot_de_passe) and utilisateur['role'] == 'admin':
             session['admin_connecte'] = True
             session['admin_nom'] = utilisateur['nom']
             return redirect(url_for('dashboard'))
@@ -370,6 +371,7 @@ def admin_reservations_annuler(id):
     conn.close()
 
     return redirect(url_for('admin_reservations'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

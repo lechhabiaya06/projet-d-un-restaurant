@@ -10,20 +10,20 @@
      <a href="/admin/commandes" class="btn-gold">Gérer les commandes</a>
      <a href="/admin/reservations" class="btn-gold">Gérer les réservations</a>
 </div>
-    <div class="stats-row">
-        <div class="stat-card">
-            <p class="stat-number">{{ nb_plats }}</p>
-            <p class="stat-label">Plats</p>
-        </div>
-        <a href="/admin/plats" class="stat-card" style="text-decoration:none;">
-    <p class="stat-number">{{ nb_plats }}</p>
-    <p class="stat-label">Plats</p>
-</a>
-        <div class="stat-card">
-            <p class="stat-number">{{ nb_reservations }}</p>
-            <p class="stat-label">Réservations</p>
-        </div>
-    </div>
+   <div class="stats-row">
+    <a href="/admin/plats" class="stat-card" style="text-decoration:none;">
+        <p class="stat-number">{{ nb_plats }}</p>
+        <p class="stat-label">Plats</p>
+    </a>
+    <a href="/admin/commandes" class="stat-card" style="text-decoration:none;">
+        <p class="stat-number">{{ nb_commandes }}</p>
+        <p class="stat-label">Commandes</p>
+    </a>
+    <a href="/admin/reservations" class="stat-card" style="text-decoration:none;">
+        <p class="stat-number">{{ nb_reservations }}</p>
+        <p class="stat-label">Réservations</p>
+    </a>
+</div>
 
     <div class="dashboard-tables">
         <div class="dashboard-table-block">

@@ -42,28 +42,62 @@
 </section>
 <section class="page-section">
     <h2 class="section-title" data-fr="Nos spécialités" data-en="Our specialties" data-es="Nuestras especialidades">Nos spécialités</h2>
-    <div class="cards-row">
-        <div class="specialty-card">
-            <div class="specialty-emoji">🍣</div>
-            <h5>Sushi Mix</h5>
-            <p class="specialty-price">120 Dhs</p>
+    <div class="title-divider"><span></span></div>
+    <p class="reservation-subtitle" data-fr="Découvrez nos plats incontournables, préparés avec des ingrédients frais et de qualité."
+       data-en="Discover our must-try dishes, made with fresh, quality ingredients."
+       data-es="Descubra nuestros platos imprescindibles, preparados con ingredientes frescos y de calidad.">
+       Découvrez nos plats incontournables, préparés avec des ingrédients frais et de qualité.
+    </p>
+
+    <div class="specialty-grid">
+        <div class="specialty-item">
+            <img src="{{ url_for('static', filename='images/sushiMix.jpg') }}" alt="Sushi Mix">
+            <div class="specialty-info">
+                <h5>Sushi Mix</h5>
+                <div class="mini-divider"></div>
+                <p data-fr="Un assortiment de sushis frais et savoureux préparés chaque jour."
+                   data-en="An assortment of fresh, tasty sushi prepared daily."
+                   data-es="Un surtido de sushi fresco y sabroso preparado a diario.">Un assortiment de sushis frais et savoureux préparés chaque jour.</p>
+                <p class="specialty-price">120 Dhs</p>
+            </div>
         </div>
-        <div class="specialty-card">
-            <div class="specialty-emoji">🍜</div>
-            <h5>Ramen</h5>
-            <p class="specialty-price">85 Dhs</p>
+        <div class="specialty-item">
+            <img src="{{ url_for('static', filename='images/wonton.jpg') }}" alt="Ramen">
+            <div class="specialty-info">
+                <h5>Ramen</h5>
+                <div class="mini-divider"></div>
+                <p data-fr="Un bouillon riche et parfumé, des nouilles fondantes et des toppings généreux."
+                   data-en="A rich, flavorful broth, tender noodles and generous toppings."
+                   data-es="Un caldo rico y aromático, fideos tiernos y generosos ingredientes.">Un bouillon riche et parfumé, des nouilles fondantes et des toppings généreux.</p>
+                <p class="specialty-price">85 Dhs</p>
+            </div>
         </div>
-        <div class="specialty-card">
-            <div class="specialty-emoji">🥟</div>
-            <h5>Gyoza</h5>
-            <p class="specialty-price">55 Dhs</p>
+        <div class="specialty-item">
+            <img src="{{ url_for('static', filename='images/gyoza.jpg') }}" alt="Gyoza">
+            <div class="specialty-info">
+                <h5>Gyoza</h5>
+                <div class="mini-divider"></div>
+                <p data-fr="Raviolis japonais grillés à la perfection, croustillants et juteux."
+                   data-en="Japanese dumplings grilled to perfection, crispy and juicy."
+                   data-es="Empanadillas japonesas asadas a la perfección, crujientes y jugosas.">Raviolis japonais grillés à la perfection, croustillants et juteux.</p>
+                <p class="specialty-price">55 Dhs</p>
+            </div>
         </div>
-        <div class="specialty-card">
-            <div class="specialty-emoji">🍤</div>
-            <h5>Tempura</h5>
-            <p class="specialty-price">65 Dhs</p>
+        <div class="specialty-item">
+            <img src="{{ url_for('static', filename='images/makiebi.jpg') }}" alt="Tempura">
+            <div class="specialty-info">
+                <h5>Tempura</h5>
+                <div class="mini-divider"></div>
+                <p data-fr="Crevettes et légumes enrobés d'une pâte légère et croustillante, frits à la perfection."
+                   data-en="Shrimp and vegetables coated in a light, crispy batter, fried to perfection."
+                   data-es="Camarones y verduras envueltos en una masa ligera y crujiente, fritos a la perfección.">Crevettes et légumes enrobés d'une pâte légère et croustillante, frits à la perfection.</p>
+                <p class="specialty-price">65 Dhs</p>
+            </div>
         </div>
     </div>
-</section>
 
+    <div style="text-align:center; margin-top:30px;">
+        <a href="/menu" class="btn-outline-gold" data-fr="Voir le menu complet →" data-en="View full menu →" data-es="Ver la carta completa →">Voir le menu complet →</a>
+    </div>
+</section>
 {% endblock %}

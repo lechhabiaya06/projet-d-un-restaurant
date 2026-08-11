@@ -792,3 +792,53 @@ h1, h2, h3 {
     margin-bottom: 40px;
     flex-wrap: wrap;
 }
+.specialty-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.specialty-item {
+    flex: 1 1 340px;
+    display: flex;
+    gap: 15px;
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,162,39,0.4);
+    border-radius: 10px;
+    padding: 15px;
+    align-items: center;
+}
+
+.specialty-item img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.specialty-info h5 {
+    color: #ffffff;
+    margin: 0;
+}
+
+.mini-divider {
+    width: 30px;
+    height: 2px;
+    background-color: #c9a227;
+    margin: 8px 0;
+}
+
+.specialty-info p {
+    color: #dddddd;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.specialty-price {
+    color: #c9a227;
+    font-weight: bold;
+    font-size: 1rem;
+}
