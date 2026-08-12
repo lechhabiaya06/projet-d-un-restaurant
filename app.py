@@ -5,23 +5,34 @@ import config
 
 app = Flask(__name__)
 app.secret_key = 'bewok_cle_secrete_2026'
-
+#gestion d'erreur de base de donnee:
+   #try/except : Python essaie de se connecter à la base 
+   #  si ça échoue (except),
+   #  au lieu de faire planter tout le site avec un message technique, 
+   # on renvoie simplement None. La route vérifie ensuite if conn is None:
+   #  et affiche notre page 500 personnalisée au lieu de l'erreur brute.
 def get_db_connection():
-    connection = pymysql.connect(
-        host=config.MYSQL_HOST,
-        user=config.MYSQL_USER,
-        password=config.MYSQL_PASSWORD,
-        database=config.MYSQL_DB
-    )
-    return connection
+    try:
+        connection = pymysql.connect(
+            host=config.MYSQL_HOST,
+            user=config.MYSQL_USER,
+            password=config.MYSQL_PASSWORD,
+            database=config.MYSQL_DB
+        )
+        return connection
+    except Exception as e:
+        return None
 
 @app.route('/')
 def accueil():
     return render_template('index.html')
-
+#gestion d'erreur de base de donnee
 @app.route('/menu')
 def menu():
     conn = get_db_connection()
+    if conn is None:
+        return render_template('500.html'), 500
+
     cursor = conn.cursor(pymysql.cursors.DictCursor)
     cursor.execute("SELECT * FROM plats")
     plats = cursor.fetchall()
@@ -372,6 +383,13 @@ def admin_reservations_annuler(id):
 
     return redirect(url_for('admin_reservations'))
 
+@app.errorhandler(404)
+def page_non_trouvee(e):
+    return render_template('404.html'), 404
 
+
+@app.errorhandler(500)
+def erreur_serveur(e):
+    return render_template('500.html'), 500
 if __name__ == '__main__':
     app.run(debug=True)
